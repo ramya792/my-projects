@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Projects - Portfolio Showcase</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: #333;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* Title Section */
+        .title-section {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 100%;
+        }
+
+        /* Project Card */
+        .project-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        /* Project Link */
+        .project-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Logo Container */
+        .logo-container {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            border-radius: 50%;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 2px;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover .logo-container {
+            transform: rotate(10deg);
+        }
+
+        .logo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            background: #f8f9ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        /* Project Info */
+        .project-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .project-card:hover .project-name {
+            color: #667eea;
+        }
+
+        .project-description {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        /* Team Number - Updated positioning */
+        .team-number {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #667eea;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .project-card {
+            animation: slideUp 0.6s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        /* Stagger animation for cards */
+        .project-card:nth-child(1) { animation-delay: 0.1s; }
+        .project-card:nth-child(2) { animation-delay: 0.15s; }
+        .project-card:nth-child(3) { animation-delay: 0.2s; }
+        .project-card:nth-child(4) { animation-delay: 0.25s; }
+        .project-card:nth-child(5) { animation-delay: 0.3s; }
+        .project-card:nth-child(6) { animation-delay: 0.35s; }
+        .project-card:nth-child(n+7) { animation-delay: 0.4s; }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 2rem;
+            }
+
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .project-card {
+                padding: 1.2rem;
+            }
+
+            .logo-container {
+                width: 60px;
+                height: 60px;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 1rem;
+            }
+
+            .project-card {
+                padding: 1rem;
+            }
+
+            .logo-container {
+                width: 50px;
+                height: 50px;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .project-name {
+                font-size: 1rem;
+            }
+
+            .project-description {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Large Desktop - 6 columns */
+        @media (min-width: 1200px) {
+            .projects-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+
+        /* Medium Desktop - 5 columns */
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .projects-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        /* Small Desktop/Tablet - 4 columns */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .projects-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Mobile - 2-3 columns */
+        @media (max-width: 767px) {
+            .projects-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Title Section -->
+        <div class="title-section">
+            <h1 class="title">My Projects</h1>
+            <p class="subtitle">A collection of 44 innovative projects showcasing creativity, technical expertise, and problem-solving skills across various domains and technologies.</p>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="projects-grid">
+            <!-- Project 1 -->
+            <div class="project-card">
+                <a href="#project1" class="project-link">
+                    <span class="team-number">Team: 1</span>
+                    <div class="logo-container">
+                        <div class="logo">🚀</div>
+                    </div>
+                    <h3 class="project-name">Space Explorer</h3>
+                    <p class="project-description">Interactive space exploration app</p>
+                </a>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card">
+                <a href="#project2" class="project-link">
+                    <span class="team-number">Team: 2</span>
+                    <div class="logo-container">
+                        <div class="logo">💡</div>
+                    </div>
+                    <h3 class="project-name">Idea Generator</h3>
+                    <p class="project-description">AI-powered creativity tool</p>
+                </a>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card">
+                <a href="#project3" class="project-link">
+                    <span class="team-number">Team: 3</span>
+                    <div class="logo-container">
+                        <div class="logo">🎨</div>
+                    </div>
+                    <h3 class="project-name">Color Palette</h3>
+                    <p class="project-description">Design color scheme generator</p>
+                </a>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card">
+                <a href="#project4" class="project-link">
+                    <span class="team-number">Team: 4</span>
+                    <div class="logo-container">
+                        <div class="logo">📱</div>
+                    </div>
+                    <h3 class="project-name">Mobile Dashboard</h3>
+                    <p class="project-description">Responsive analytics interface</p>
+                </a>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card">
+                <a href="#project5" class="project-link">
+                    <span class="team-number">Team: 5</span>
+                    <div class="logo-container">
+                        <div class="logo">🔧</div>
+                    </div>
+                    <h3 class="project-name">Dev Tools</h3>
+                    <p class="project-description">Developer productivity suite</p>
+                </a>
+            </div>
+
+            <!-- Project 6 -->
+            <div class="project-card">
+                <a href="#project6" class="project-link">
+                    <span class="team-number">Team: 6</span>
+                    <div class="logo-container">
+                        <div class="logo">🎵</div>
+                    </div>
+                    <h3 class="project-name">Music Player</h3>
+                    <p class="project-description">Modern audio streaming app</p>
+                </a>
+            </div>
+
+            <!-- Projects 7-12 -->
+            <div class="project-card">
+                <a href="#project7" class="project-link">
+                    <span class="team-number">Team: 7</span>
+                    <div class="logo-container">
+                        <div class="logo">📊</div>
+                    </div>
+                    <h3 class="project-name">Data Visualizer</h3>
+                    <p class="project-description">Interactive chart library</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project8" class="project-link">
+                    <span class="team-number">Team: 8</span>
+                    <div class="logo-container">
+                        <div class="logo">🛒</div>
+                    </div>
+                    <h3 class="project-name">E-Commerce</h3>
+                    <p class="project-description">Full-stack shopping platform</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project9" class="project-link">
+                    <span class="team-number">Team: 9</span>
+                    <div class="logo-container">
+                        <div class="logo">🏠</div>
+                    </div>
+                    <h3 class="project-name">Smart Home</h3>
+                    <p class="project-description">IoT control dashboard</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project10" class="project-link">
+                    <span class="team-number">Team: 10</span>
+                    <div class="logo-container">
+                        <div class="logo">📝</div>
+                    </div>
+                    <h3 class="project-name">Note Taker</h3>
+                    <p class="project-description">Markdown editor with sync</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project11" class="project-link">
+                    <span class="team-number">Team: 11</span>
+                    <div class="logo-container">
+                        <div class="logo">🎮</div>
+                    </div>
+                    <h3 class="project-name">Game Hub</h3>
+                    <p class="project-description">Retro gaming collection</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project12" class="project-link">
+                    <span class="team-number">Team: 12</span>
+                    <div class="logo-container">
+                        <div class="logo">🌤️</div>
+                    </div>
+                    <h3 class="project-name">Weather App</h3>
+                    <p class="project-description">Real-time forecast display</p>
+                </a>
+            </div>
+
+            <!-- Projects 13-18 -->
+            <div class="project-card">
+                <a href="#project13" class="project-link">
+                    <span class="team-number">Team: 13</span>
+                    <div class="logo-container">
+                        <div class="logo">💰</div>
+                    </div>
+                    <h3 class="project-name">Finance Tracker</h3>
+                    <p class="project-description">Personal budget manager</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project14" class="project-link">
+                    <span class="team-number">Team: 14</span>
+                    <div class="logo-container">
+                        <div class="logo">🏋️</div>
+                    </div>
+                    <h3 class="project-name">Fitness Coach</h3>
+                    <p class="project-description">Workout planning assistant</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project15" class="project-link">
+                    <span class="team-number">Team: 15</span>
+                    <div class="logo-container">
+                        <div class="logo">🍳</div>
+                    </div>
+                    <h3 class="project-name">Recipe Book</h3>
+                    <p class="project-description">Culinary inspiration platform</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project16" class="project-link">
+                    <span class="team-number">Team: 16</span>
+                    <div class="logo-container">
+                        <div class="logo">🎯</div>
+                    </div>
+                    <h3 class="project-name">Goal Tracker</h3>
+                    <p class="project-description">Achievement progress monitor</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project17" class="project-link">
+                    <span class="team-number">Team: 17</span>
+                    <div class="logo-container">
+                        <div class="logo">🔐</div>
+                    </div>
+                    <h3 class="project-name">Password Manager</h3>
+                    <p class="project-description">Secure credential storage</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="https://smart-bot-18ou.vercel.app" class="project-link">
+                    <span class="team-number">Team: 18</span>
+                    <div class="logo-container">
+                        <div class="logo">🤖</div>
+                    </div>
+                    <h3 class="project-name">SmartBot</h3>
+                    <p class="project-description">Real time messing flatform</p>
+                </a>
+            </div>
+
+            <!-- Projects 19-24 -->
+            <div class="project-card">
+                <a href="#project19" class="project-link">
+                    <span class="team-number">Team: 19</span>
+                    <div class="logo-container">
+                        <div class="logo">🎪</div>
+                    </div>
+                    <h3 class="project-name">Event Planner</h3>
+                    <p class="project-description">Party organization tool</p>
+                </a>
+            </div>
+
+            <div class="project-card"> 
+                <a href="#project20" class="project-link">
+                    <span class="team-number">Team: 20</span>
+                    <div class="logo-container">
+                        <div class="logo">🚗</div>
+                    </div>
+                    <h3 class="project-name">Car Rental</h3>
+                    <p class="project-description">Vehicle booking platform</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project21" class="project-link">
+                    <span class="team-number">Team: 21</span>
+                    <div class="logo-container">
+                        <div class="logo">✈️</div>
+                    </div>
+                    <h3 class="project-name">Travel Planner</h3>
+                    <p class="project-description">Trip itinerary manager</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project22" class="project-link">
+                    <span class="team-number">Team: 22</span>
+                    <div class="logo-container">
+                        <div class="logo">🎨</div>
+                    </div>
+                    <h3 class="project-name">Art Gallery</h3>
+                    <p class="project-description">Digital artwork showcase</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project23" class="project-link">
+                    <span class="team-number">Team: 23</span>
+                    <div class="logo-container">
+                        <div class="logo">📧</div>
+                    </div>
+                    <h3 class="project-name">Email Client</h3>
+                    <p class="project-description">Modern messaging interface</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project24" class="project-link">
+                    <span class="team-number">Team: 24</span>
+                    <div class="logo-container">
+                        <div class="logo">💬</div>
+                    </div>
+                    <h3 class="project-name">Chat App</h3>
+                    <p class="project-description">Real-time communication</p>
+                </a>
+            </div>
+
+            <!-- Projects 25-30 -->
+            <div class="project-card">
+                <a href="#project25" class="project-link">
+                    <span class="team-number">Team: 25</span>
+                    <div class="logo-container">
+                        <div class="logo">🏆</div>
+                    </div>
+                    <h3 class="project-name">Tournament</h3>
+                    <p class="project-description">Sports competition manager</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project26" class="project-link">
+                    <span class="team-number">Team: 26</span>
+                    <div class="logo-container">
+                        <div class="logo">🎬</div>
+                    </div>
+                    <h3 class="project-name">Movie Database</h3>
+                    <p class="project-description">Film discovery platform</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project27" class="project-link">
+                    <span class="team-number">Team: 27</span>
+                    <div class="logo-container">
+                        <div class="logo">📰</div>
+                    </div>
+                    <h3 class="project-name">News Aggregator</h3>
+                    <p class="project-description">Curated content reader</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project28" class="project-link">
+                    <span class="team-number">Team: 28</span>
+                    <div class="logo-container">
+                        <div class="logo">🌱</div>
+                    </div>
+                    <h3 class="project-name">Plant Care</h3>
+                    <p class="project-description">Garden management app</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project29" class="project-link">
+                    <span class="team-number">Team: 29</span>
+                    <div class="logo-container">
+                        <div class="logo">🏥</div>
+                    </div>
+                    <h3 class="project-name">Health Monitor</h3>
+                    <p class="project-description">Medical tracking system</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project30" class="project-link">
+                    <span class="team-number">Team: 30</span>
+                    <div class="logo-container">
+                        <div class="logo">🎓</div>
+                    </div>
+                    <h3 class="project-name">Learning Hub</h3>
+                    <p class="project-description">Educational course platform</p>
+                </a>
+            </div>
+
+            <!-- Projects 31-36 -->
+            <div class="project-card">
+                <a href="#project31" class="project-link">
+                    <span class="team-number">Team: 31</span>
+                    <div class="logo-container">
+                        <div class="logo">🔊</div>
+                    </div>
+                    <h3 class="project-name">Podcast Player</h3>
+                    <p class="project-description">Audio content streamer</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project32" class="project-link">
+                    <span class="team-number">Team: 32</span>
+                    <div class="logo-container">
+                        <div class="logo">📷</div>
+                    </div>
+                    <h3 class="project-name">Photo Editor</h3>
+                    <p class="project-description">Image processing tool</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project33" class="project-link">
+                    <span class="team-number">Team: 33</span>
+                    <div class="logo-container">
+                        <div class="logo">🌐</div>
+                    </div>
+                    <h3 class="project-name">Website Builder</h3>
+                    <p class="project-description">Drag-and-drop site creator</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project34" class="project-link">
+                    <span class="team-number">Team: 34</span>
+                    <div class="logo-container">
+                        <div class="logo">⏰</div>
+                    </div>
+                    <h3 class="project-name">Time Tracker</h3>
+                    <p class="project-description">Productivity time logger</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project35" class="project-link">
+                    <span class="team-number">Team: 35</span>
+                    <div class="logo-container">
+                        <div class="logo">🎸</div>
+                    </div>
+                    <h3 class="project-name">Music Studio</h3>
+                    <p class="project-description">Digital audio workstation</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project36" class="project-link">
+                    <span class="team-number">Team: 36</span>
+                    <div class="logo-container">
+                        <div class="logo">🍕</div>
+                    </div>
+                    <h3 class="project-name">Food Delivery</h3>
+                    <p class="project-description">Restaurant ordering system</p>
+                </a>
+            </div>
+
+            <!-- Projects 37-42 -->
+            <div class="project-card">
+                <a href="#project37" class="project-link">
+                    <span class="team-number">Team: 37</span>
+                    <div class="logo-container">
+                        <div class="logo">🎪</div>
+                    </div>
+                    <h3 class="project-name">Circus Manager</h3>
+                    <p class="project-description">Entertainment scheduling</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project38" class="project-link">
+                    <span class="team-number">Team: 38</span>
+                    <div class="logo-container">
+                        <div class="logo">🧮</div>
+                    </div>
+                    <h3 class="project-name">Calculator Pro</h3>
+                    <p class="project-description">Advanced computation tool</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project39" class="project-link">
+                    <span class="team-number">Team: 39</span>
+                    <div class="logo-container">
+                        <div class="logo">📍</div>
+                    </div>
+                    <h3 class="project-name">Location Finder</h3>
+                    <p class="project-description">GPS navigation assistant</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project40" class="project-link">
+                    <span class="team-number">Team: 40</span>
+                    <div class="logo-container">
+                        <div class="logo">🎲</div>
+                    </div>
+                    <h3 class="project-name">Game Center</h3>
+                    <p class="project-description">Multiplayer gaming hub</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project41" class="project-link">
+                    <span class="team-number">Team: 41</span>
+                    <div class="logo-container">
+                        <div class="logo">🔍</div>
+                    </div>
+                    <h3 class="project-name">Search Engine</h3>
+                    <p class="project-description">Custom web indexer</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project42" class="project-link">
+                    <span class="team-number">Team: 42</span>
+                    <div class="logo-container">
+                        <div class="logo">🌟</div>
+                    </div>
+                    <h3 class="project-name">Review System</h3>
+                    <p class="project-description">Rating and feedback platform</p>
+                </a>
+            </div>
+
+            <!-- Projects 43-44 -->
+            <div class="project-card">
+                <a href="https://hotel-info1354.vercel.app/" class="project-link">
+                    <span class="team-number">Team: 43</span>
+                    <div class="logo-container">
+                        <div class="logo">🏨</div>
+                    </div>
+                    <h3 class="project-name">Hotel info</h3>
+                    <p class="project-description">find your perfect hotel</p>
+                </a>
+            </div>
+
+            <div class="project-card">
+                <a href="#project44" class="project-link">
+                    <span class="team-number">Team: 44</span>
+                    <div class="logo-container">
+                        <div class="logo">🏁</div>
+                    </div>
+                    <h3 class="project-name">Project Finale</h3>
+                    <p class="project-description">Portfolio showcase finale</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
